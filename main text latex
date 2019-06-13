@@ -411,10 +411,10 @@ Con un tamaño de muestra de muestra de 1000:
    \caption{Muestra 1000 Distribución Exp con $\lambda=2$}
 \end{figure}
 \begin{itemize}
-  \item El promedio según la fórmula del general $\frac{(a + b)}{2}:0.5022988843415361 $
-  \item El promedio según la función de Python es: $0.5$
-  \item La varianza según la fórmula $\frac{(b - a)^2}{12} = 0.2359344646207349$
-  \item La varianza según la función de Python es: $0.25$
+  \item El calculo de la esperanza en la muestra  es:$0.502298$
+  \item Teoricamente la esperanza es: $0.5$
+  \item El calculo de la varianza en la muestra es: $0.235934$
+  \item Teoricamente la varianza es:  $0.25$
 
 \end{itemize}
 
@@ -426,123 +426,118 @@ Con un tamaño de muestra de muestra de 1000:
    \caption{Muestra 1000 Distribución Exp con $\lambda=3$}
 \end{figure}
 \begin{itemize}
-  \item El promedio según la fórmula del general $\frac{1}{\lambda}: 0.2$
-  \item El promedio segun el metodo inverso es: $0.2005$
-  \item El promedio según la función de Python es: $0.2043$
-  \item La varianza según la fórmula $\frac{1}{\lambda^2} = 0.04$
-  \item La varianza según el método inverso: $0.0406$
-  \item La varianza según la función de Python es: $0.0419$
+  \item El calculo de la esperanza en la muestra  es:$ 0.33823$
+  \item Teoricamente la esperanza es: $0.33$
+  \item El calculo de la varianza en la muestra es: $ 0.1060189$
+  \item Teoricamente la varianza es:  $0.11$
 \end{itemize}
 
-Con un tamaño de muestra de muestra de 100000:
+Datos obtenidos durante la ejecución para $\lambda=5$:\\
+Con un tamaño de muestra de muestra de 1000:
 \begin{figure}[hbt!]
  \centering
    \includegraphics[width=\linewidth, height=5cm]{img/exp3.png}\\
-   \caption{Muestra 100000 Distribución Exp}
+   \caption{Muestra 1000 Distribución Exp con $\lambda=5$}
 \end{figure}
 \begin{itemize}
-  \item El promedio según la fórmula del general $\frac{1}{\lambda}: 0.2$
-  \item El promedio segun el metodo inverso es: $0.2006$
-  \item El promedio según la función de Python es: $0.1996$
-  \item La varianza según la fórmula $\frac{1}{\lambda^2} = 0.04$
-  \item La varianza según el método inverso: $0.0401$
-  \item La varianza según la función de Python es: $0.0398$
+  \item El calculo de la esperanza en la muestra  es:$ 0.19403$
+  \item Teoricamente la esperanza es: $0.2$
+  \item El calculo de la varianza en la muestra es: $0.235934$
+  \item Teoricamente la varianza es:  $0.25$
 \end{itemize}
 
 \subsubsection{Distribución Gamma}
-Datos obtenidos durante la ejecución para $\lambda=5$ y $k = 5$:\\
-Con un tamaño de muestra de muestra de 1000:
+Datos obtenidos durante la ejecución para $\lambda=1$ y $k = 2$:\\
+Con un tamaño de muestra de muestra de 10000:
 
 \begin{figure}[hbt!]
  \centering
    \includegraphics[width=\linewidth, height=5cm]{img/GAMMA1.png}\\
-   \caption{Muestra 1000 Distribución Gamma}
+   \caption{Muestra 10000 Distribución Gamma para $\lambda=1$ y $k = 2$}
 \end{figure}
 \begin{itemize}
-  \item El promedio según la fórmula del general $\frac{k}{\lambda}: 1.0$
-  \item El promedio segun el metodo inverso es: $0.9920$
-  \item El promedio según la función de Python es: $1.0135$
-  \item La varianza según la fórmula $\frac{k}{\lambda^2} = 0.2$
-  \item La varianza según el método inverso: $0.1873$
-  \item La varianza según la función de Python es: $0.2084$
+  \item El calculo de la esperanza en la muestra es: $2.000458$
+  \item Teoricamente la Esperanza es:$2.0 $
+  \item El calculo de la Varianza es: $ 1.976694$
+  \item Teoricamente la Varianza es: $2.0 $
 \end{itemize}
 
+Datos obtenidos durante la ejecución para $\lambda=4$ y $k = 5$:\\
 Con un tamaño de muestra de muestra de 10000:
 \begin{figure}[hbt!]
  \centering
    \includegraphics[width=\linewidth, height=5cm]{img/GAMMA2.png}\\
-   \caption{Muestra 10000 Distribución Gamma}
+   \caption{Muestra 10000 Distribución Gamma para $\lambda=4$ y $k = 5$}
 \end{figure}
 \begin{itemize}
-  \item El promedio según la fórmula del general $\frac{k}{\lambda}: 1.0$
-  \item El promedio segun el metodo inverso es: $ 0.9985$
-  \item El promedio según la función de Python es: $1.0009$
-  \item La varianza según la fórmula $\frac{k}{\lambda^2} = 0.2$
-  \item La varianza según el método inverso: $0.1873$
-  \item La varianza según la función de Python es: $0.2084$
+  \item El calculo de la esperanza en la muestra es: $1.250350 $
+  \item Teoricamente la Esperanza es:$1.25 $
+  \item El calculo de la Varianza es: $0.3078924 $
+  \item Teoricamente la Varianza es: $0.3125 $
 \end{itemize}
 
-Con un tamaño de muestra de muestra de 100000:
+Datos obtenidos durante la ejecución para $\lambda=9$ y $k = 8$:\\
+Con un tamaño de muestra de muestra de 10000:
 \begin{figure}[hbt!]
  \centering
    \includegraphics[width=\linewidth, height=5cm]{img/GAMMA3.png}\\
-   \caption{Muestra 100000 Distribución Gamma}
+   \caption{Muestra 10000 Distribución Gamma para $\lambda=9$ y $k = 8$}
 \end{figure}
 \begin{itemize}
-  \item El promedio según la fórmula del general $\frac{k}{\lambda}: 1.0$
-  \item El promedio segun el metodo inverso es: $0.9976$
-  \item El promedio según la función de Python es: $ 0.9960$
-  \item La varianza según la fórmula $\frac{k}{\lambda^2} = 0.2$
-  \item La varianza según el método inverso: $0.1948$
-  \item La varianza según la función de Python es: $0.1986$
+  \item El calculo de la esperanza en la muestra es: $0.88740 $
+  \item Teoricamente la Esperanza es:$ 0.88 $
+  \item El calculo de la Varianza es: $0.099526 $
+  \item Teoricamente la Varianza es: $ 0.098765 $
 \end{itemize}
 
 \subsubsection{Distribución Normal}
-Datos obtenidos durante la ejecución para $\mu=23.4$ y $\sigma = 6.23$:\\
+Datos obtenidos durante la ejecución para $\mu=20$ y $\sigma = 2$:\\
 Con un tamaño de muestra de muestra de 1000:
 
 \begin{figure}[hbt!]
  \centering
    \includegraphics[width=\linewidth, height=5cm]{img/normal1.png}\\
-   \caption{Muestra 1000 Distribución Normal}
+   \caption{Muestra 1000 Distribución Normal para $\mu=20$ y $\sigma = 2$}
 \end{figure}
 \begin{itemize}
-  \item El promedio ingresado fue: $23.4$
-  \item El promedio calculado es: $23.430$
-  \item El promedio calculado en la autogenerada es:  $23.439$
-  \item El desvio estandar ingresado fue:$6.23$
-  \item El desvio estandar calculado es: $6.399$
-  \item El desvio estandar calculado en la autogenerada es: $6.214$
+  \item El calculo de la Esperanza de los valores generados es: $19.938326$
+  \item Teoricamente es:  $20$
+  \item El calculo de la Varianza de los valores generados es  $ 4.245192$
+  \item Teoricamente es: $4$
+  \item El calculo de la Varianza de los valores generados es  $ 2.060386$
+  \item Teoricamente es  $2$
 \end{itemize}
 
-Con un tamaño de muestra de muestra de 10 000:
+Datos obtenidos durante la ejecución para $\mu=25$ y $\sigma = 3$:\\
+Con un tamaño de muestra de muestra de 1000:
 \begin{figure}[hbt!]
  \centering
    \includegraphics[width=\linewidth, height=5cm]{img/normal2.png}\\
-   \caption{Muestra 10000 Distribución Normal}
+   \caption{Muestra 1000 Distribución Normal para $\mu=20$ y $\sigma = 2$}
 \end{figure}
 \begin{itemize}
-  \item El promedio ingresado fue: $23.4$
-  \item El promedio calculado es: $23.439$
-  \item El promedio calculado en la autogenerada es:  $23.343$
-  \item El desvio estandar ingresado fue:$6.23$
-  \item El desvio estandar calculado es: $6.30$
-  \item El desvio estandar calculado en la autogenerada es: $6.307$
+  \item El calculo de la Esperanza de los valores generados es: $24.883818$
+  \item Teoricamente es:  $25$
+  \item El calculo de la Varianza de los valores generados es  $ 8.423882$
+  \item Teoricamente es: $9$
+  \item El calculo de la Varianza de los valores generados es  $ 2.902392$
+  \item Teoricamente es  $3$
 \end{itemize}
 
-Con un tamaño de muestra de muestra de 100 000:
+Datos obtenidos durante la ejecución para $\mu=30$ y $\sigma = 5$:\\
+Con un tamaño de muestra de muestra de 1000:
 \begin{figure}[hbt!]
  \centering
    \includegraphics[width=\linewidth, height=5cm]{img/normal3.png}\\
    \caption{Muestra 100000 Distribución Normal}
 \end{figure}
 \begin{itemize}
-  \item El promedio ingresado fue: $23.4$
-  \item El promedio calculado es: $23.39$
-  \item El promedio calculado en la autogenerada es:  $23.426$
-  \item El desvio estandar ingresado fue:$6.23$
-  \item El desvio estandar calculado es: $6.219$
-  \item El desvio estandar calculado en la autogenerada es: $6.218$
+  \item El calculo de la Esperanza de los valores generados es: $29.823058$
+  \item Teoricamente es:  $30$
+  \item El calculo de la Varianza de los valores generados es  $23.82459$
+  \item Teoricamente es: $25$
+  \item El calculo de la Varianza de los valores generados es  $ 4.88104$
+  \item Teoricamente es  $5$
 \end{itemize}
 
 \subsubsection{Distribución Binominal}
@@ -829,54 +824,52 @@ baselinestretch=1.2,
 fontsize=\footnotesize,
 ]{python}
 
-import matplotlib.pyplot as pl
-import numpy as np
+from  random import *
+import matplotlib.pyplot as plt
+import stats
+import numpy
 import math
-import random
+import os
 
-def dibujarHistogramas(lista, media, sigma):
-    pl.figure("Histograma de frecuencias de una variable con distribucion Normal")
-    pl.suptitle("Distribucion Normal")
-    pl.title("El media vale %3.2f y el desvio vale %3.2f" % (media, sigma))
-    pl.hist([lista, listaPython], bins=30, range=(media - 6*sigma, media + 6*sigma), label=['x', 'y'], color=['orange', 'blue'])
-    pl.grid(True)
-    pl.xlabel("tiempo(s)")
-    pl.ylabel("Valores")
-    pl.text( media - 4 * sigma, 5, 'Funcion de Python', color="blue", style='italic',
-            bbox={'facecolor': 'white', 'alpha': 0.90, 'pad': 5})
-    pl.text(media + sigma, 5, 'Transformada Inversa', color="orange", style='italic',
-            bbox={'facecolor': 'white', 'alpha': 0.90, 'pad': 5})
-    pl.show()
-    pl.clf()
 
-print("Distribucion Normal")
-print("Ingrese la cantidad de muestras a utilizar.")
-cantMuestras = int(input())
-print("Ingrese la media poblacional")
-media = float(input())
-print("Ingrese el desvio estandar poblacional")
-sigma = float(input())
+def generoValoresNormales(mu,sigma):
+    sum=0
+    for i in range(0,12):
+        r=random()
+        sum=sum+r
+    return(sigma*(sum-6)+mu)
 
-lista=[]
-listaPython=[]
+def muestroEspeYVar(valores,mu,sigma):
+    print("\nEl calculo de la Esperanza de los valores generados es:", stats.mean(valores))
+    print("Teoricamente es =", mu)
+    print("El calculo de la Varianza de los valores generados es =",numpy.var(valores) )
+    print("Teoricamente es:",  sigma**2)
+    print("El Desvio Estandar de los valores generados es = ",math.sqrt(numpy.var(valores)))
+    print("Teoricamente es =",sigma)
 
-for i in range(cantMuestras):
-    sum = 0
-    for j in range(12):
-        r = random.random()
-        sum = sum + r
-    x = sigma * (sum - 6) + media
-    lista.append(x)
-    listaPython.append(np.random.normal(media, sigma))
+def creoHistogramas(valores,mu,sigma):
+    plt.hist(valores1,edgecolor = 'black',linewidth=1,density=1, label=(f'Mu = {mu} , Sigma= {sigma}'))
+    plt.xlabel("Valores")
+    plt.ylim(0,0.2)
+    y=[(1/(sigma*(math.sqrt(2*math.pi))))*math.exp((-1/2)*((x-mu)/sigma)**2) for x in valores]
+    plt.plot(valores,y,'.')
+    plt.legend(title="Funcion densidad")
+    plt.grid(True)
+    plt.title("Grafica de Distribución Normal")
+    plt.show()
+cantNum = 1000
+mu=[20,25,30]
+sigma=[2,3,5]
+print(math.pi)
+for i in range(0,len(mu)):
+    valores1 = []
+    for j in range(0,cantNum):
+        valores1.append(generoValoresNormales(mu[i],sigma[i]))
 
-print("El promedio ingresado fue :" + str(media))
-print("El promedio calculado es: " + str(np.mean(lista)))
-print("El promedio calculado en la autogenerada es: " + str(np.mean(listaPython)))
-print("La desvio estandar ingresado fue: " + str(sigma))
-print("La desvio estandar calculado es: " + str(math.sqrt(np.var(lista))) )
-print("La desvio estandar calculado en la autogenerada es: " + str(math.sqrt(np.var(listaPython))) )
-
-dibujarHistogramas(lista, media, sigma)
+    print("\nMuestra numero ", i+1)
+    muestroEspeYVar(valores1,mu[i],sigma[i])
+    creoHistogramas(valores1,mu[i],sigma[i])
+    print('mu es: ',mu[i],'sigma es: ',sigma[i])
 
 
 \end{minted}
