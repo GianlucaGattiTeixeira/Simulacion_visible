@@ -1,0 +1,41 @@
+from random import random
+import matplotlib.pyplot as plt
+import stats
+import numpy
+import math
+
+def calcularEsperanza(alfa):
+    esperanza=1/alfa
+    return esperanza
+
+def calcularVarianza(alfa):
+    var= 1/(alfa**2)
+    return var
+
+def muestroEspeYVar(valores,esperanzaTeorica,alfa):
+    print("\nEl calculo de la esperanza en la muestra  es:", stats.mean(valores))
+    print("Teoricamente la esperanza es:", esperanzaTeorica)
+    print("El calculo de la varianza en la muestra es:", numpy.var(valores))
+    print("Teoricamente la varianza es:", calcularVarianza(alfa))
+    print('alfa es: ',alfa)
+
+def creoGraficos(valores,alfa):
+    y = [alfa*math.exp(-alfa*x) for x in valores]
+    plt.plot(valores, y,'o')
+    plt.hist(valores,edgecolor = 'black',linewidth=1,density=1 , label=(f'Alfa 1 ={alfa}'))
+    plt.xlabel("Valores")
+    plt.grid(True)
+    plt.title("Grafica de Distribucion exponencial")
+    plt.show()
+
+
+cantNum = 1000
+alfas=[2,3,5]
+for i in range(0,len(alfas)):
+    valores = []
+    esperanzaTeorica=calcularEsperanza(alfas[i])
+    for j in range(0,cantNum):
+         valores.append((-esperanzaTeorica) * (math.log(random())))
+
+    muestroEspeYVar(valores,esperanzaTeorica,alfas[i])
+    creoGraficos(valores,alfas[i])
