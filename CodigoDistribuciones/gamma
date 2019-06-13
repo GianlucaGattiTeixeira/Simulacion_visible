@@ -1,0 +1,43 @@
+from random import random
+import matplotlib.pyplot as plt
+import stats
+import numpy
+import math
+
+def generoDistGamma(ka,alfa):
+    tr = 1
+    for i in range(0, ka):
+        tr =tr * random()
+    return (-(math.log(tr)) / alfa)
+
+def creoHistogramas(valores,alfa,ka):
+    plt.hist(valores,bins=100,edgecolor = 'black',linewidth=1,density=1, label=(f'Alfa = {alfa} , k1 = {ka}'))
+    plt.xlabel("Valores")
+    y=[((alfa**ka)*(x**(ka-1))*math.exp(-alfa*x))/math.factorial(ka-1) for x in valores]
+    plt.grid(True)
+    plt.title("Distribucion Gamma")
+    plt.legend(title="Parametros")
+    plt.plot(valores,y,'o')
+    plt.title("Grafica de Distribucion gamma")
+    #plt.xlabel(f'Media:{stats.mean(valores)} , Varianza:{numpy.var(valores)}')
+    plt.xlabel('Valores')
+    plt.show()
+
+def muestroEsperanzayVar(valores,alfa,ka):
+    print("El calculo de la esperanza en la muestra es:",stats.mean(valores))
+    print("Teoricamente la Esperanza es = ",ka/alfa)
+    print("\nEl calculo de la Varianza es = ",numpy.var(valores))
+    print("Teoricamente la Varianza es = ",ka/(alfa**2))
+    print('alfa')
+
+cantNum = 10000
+alfas=[1,4,9]
+kas=[2,5,8]
+for i in range(0,len(alfas)):
+    valores = []
+    for j in range(0,cantNum):
+        valores.append(generoDistGamma(kas[i],alfas[i]))
+    muestroEsperanzayVar(valores,alfas[i],kas[i])
+    creoHistogramas(valores,alfas[i],kas[i])
+    print('Alfa: ',alfas[i],'Ka: ',kas[i])
+    print("\n")
