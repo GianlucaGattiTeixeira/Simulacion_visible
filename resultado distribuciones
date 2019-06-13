@@ -133,24 +133,30 @@ El Desvio Estandar de los valores generados es =  13.124035926497612
 Teoricamente es = 12.649110640673518
 
 
+-----------------------POISSON----------------------
+ Muestra Nro  1
 
+El calculo de la Esperanza de los valores generados es: 10.048
+Teoricamente es = 10
+El calculo de la Varianza de los valores generados es = 10.729696
+Teoricamente es: 10
+El Desvio Estandar de los valores generados es =  3.275621467752341
+Teoricamente es = 3.1622776601683795
 
+ Muestra Nro  2
 
+El calculo de la Esperanza de los valores generados es: 7.052
+Teoricamente es = 7
+El calculo de la Varianza de los valores generados es = 6.595295999999999
+Teoricamente es: 7
+El Desvio Estandar de los valores generados es =  2.568130837788449
+Teoricamente es = 2.6457513110645907
 
+ Muestra Nro  3
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+El calculo de la Esperanza de los valores generados es: 3.973
+Teoricamente es = 4
+El calculo de la Varianza de los valores generados es = 4.238271000000001
+Teoricamente es: 4
+El Desvio Estandar de los valores generados es =  2.058706147073934
+Teoricamente es = 2.0
