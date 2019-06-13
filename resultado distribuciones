@@ -1,0 +1,97 @@
+esperanza 2
+El calculo de la esperanza en la muestra es: 5052.077769764211 
+Teoricamente la esperanza es: 5000.0
+
+El calculo de la varianza en la muestra es: 8375512.825178029 
+Teoricamente la varianza es: 8333333.333333333
+
+El calculo del desvio estandar en la muestra es: 2894.0478270370772 
+Teoricamente el desvio estandar es: 2886.751345948129
+
+
+esperanza3
+El calculo de la esperanza en la muestra es: 50065.04155987697 
+Teoricamente la esperanza es: 50000.0
+
+El calculo de la varianza en la muestra es: 828049794.0170414 
+Teoricamente la varianza es: 833333333.3333334
+
+El calculo del desvio estandar en la muestra es: 28775.854357725704 
+Teoricamente el desvio estandar es: 28867.513459481288
+
+----------------------normal----------------------------------------
+cantidad de valores 1000
+Muestra numero  1
+
+El calculo de la Esperanza de los valores generados es: 19.938326503010025
+Teoricamente es = 20
+El calculo de la Varianza de los valores generados es = 4.245192115979244
+Teoricamente es: 4
+El Desvio Estandar de los valores generados es =  2.0603863996782845
+Teoricamente es = 2
+mu es:  20 sigma es:  2
+
+Muestra numero  2
+
+El calculo de la Esperanza de los valores generados es: 24.883818294699115
+Teoricamente es = 25
+El calculo de la Varianza de los valores generados es = 8.423882843877799
+Teoricamente es: 9
+El Desvio Estandar de los valores generados es =  2.9023926067776906
+Teoricamente es = 3
+mu es:  25 sigma es:  3
+
+Muestra numero  3
+
+El calculo de la Esperanza de los valores generados es: 29.82305375693741
+Teoricamente es = 30
+El calculo de la Varianza de los valores generados es = 23.824594344355486
+Teoricamente es: 25
+El Desvio Estandar de los valores generados es =  4.881044390738061
+Teoricamente es = 5
+mu es:  30 sigma es:  5
+
+--------------------EXPONENCIAL-----------------------------------
+
+
+El calculo de la esperanza en la muestra  es: 0.5022988843415361
+Teoricamente la esperanza es: 0.5
+El calculo de la varianza en la muestra es: 0.2359344646207349
+Teoricamente la varianza es: 0.25
+alfa es:  2
+
+El calculo de la esperanza en la muestra  es: 0.338236479074697
+Teoricamente la esperanza es: 0.3333333333333333
+El calculo de la varianza en la muestra es: 0.10601892786082744
+Teoricamente la varianza es: 0.1111111111111111
+alfa es:  3
+
+El calculo de la esperanza en la muestra  es: 0.19403515361660795
+Teoricamente la esperanza es: 0.2
+El calculo de la varianza en la muestra es: 0.03737335459567088
+Teoricamente la varianza es: 0.04
+alfa es:  5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
