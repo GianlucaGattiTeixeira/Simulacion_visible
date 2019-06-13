@@ -101,6 +101,36 @@ alfa
 Alfa:  9 Ka:  8
 
 
+-------------------------BINOMIAL-----------------------------
+
+la probabilidad de suceso es:  0.8   el nro. de enasayos es:  800
+
+El calculo de la Esperanza de los valores generados es: 640.223
+Teoricamente es = 640.0
+El calculo de la Varianza de los valores generados es = 128.179271
+Teoricamente es: 127.99999999999997
+El Desvio Estandar de los valores generados es =  11.321628460605833
+Teoricamente es = 11.31370849898476
+-------------------------------------------------------
+
+la probabilidad de suceso es:  0.6   el nro. de enasayos es:  900
+
+El calculo de la Esperanza de los valores generados es: 539.644
+Teoricamente es = 540.0
+El calculo de la Varianza de los valores generados es = 217.261264
+Teoricamente es: 216.0
+El Desvio Estandar de los valores generados es =  14.739785073059918
+Teoricamente es = 14.696938456699069
+-------------------------------------------------------
+
+la probabilidad de suceso es:  0.2   el nro. de enasayos es:  1000
+
+El calculo de la Esperanza de los valores generados es: 200.459
+Teoricamente es = 200.0
+El calculo de la Varianza de los valores generados es = 172.24031900000003
+Teoricamente es: 160.0
+El Desvio Estandar de los valores generados es =  13.124035926497612
+Teoricamente es = 12.649110640673518
 
 
 
