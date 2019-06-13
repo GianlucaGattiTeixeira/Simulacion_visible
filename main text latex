@@ -403,27 +403,27 @@ Con un tamaño de muestra de muestra de 100000:
 \end{itemize}
 
 \subsubsection{Distribución Exponencial}
-Datos obtenidos durante la ejecución para $\lambda=5$:\\
+Datos obtenidos durante la ejecución para $\lambda=2$:\\
 Con un tamaño de muestra de muestra de 1000:
 \begin{figure}[hbt!]
  \centering
    \includegraphics[width=\linewidth, height=5cm]{img/exp1.png}\\
-   \caption{Muestra 1000 Distribución Exp}
+   \caption{Muestra 1000 Distribución Exp con $\lambda=2$}
 \end{figure}
 \begin{itemize}
-  \item El promedio según la fórmula del general $\frac{(a + b)}{2}:- $
-  \item El promedio según la función de Python es: $-$
-  \item La varianza según la fórmula $\frac{(b - a)^2}{12} = $
-  \item La varianza según la función de Python es: $-$
-  \item La desviación estandar según la formula es: $-$
-  \item La desviación estandar según la funcion de python es: $-$
+  \item El promedio según la fórmula del general $\frac{(a + b)}{2}:0.5022988843415361 $
+  \item El promedio según la función de Python es: $0.5$
+  \item La varianza según la fórmula $\frac{(b - a)^2}{12} = 0.2359344646207349$
+  \item La varianza según la función de Python es: $0.25$
+
 \end{itemize}
 
-Con un tamaño de muestra de muestra de 10000:
+Datos obtenidos durante la ejecución para $\lambda=3$:\\
+Con un tamaño de muestra de muestra de 1000:
 \begin{figure}[hbt!]
  \centering
    \includegraphics[width=\linewidth, height=5cm]{img/exp2.png}\\
-   \caption{Muestra 10000 Distribución Exp}
+   \caption{Muestra 1000 Distribución Exp con $\lambda=3$}
 \end{figure}
 \begin{itemize}
   \item El promedio según la fórmula del general $\frac{1}{\lambda}: 0.2$
