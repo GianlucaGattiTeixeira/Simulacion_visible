@@ -73,6 +73,35 @@ Teoricamente la varianza es: 0.04
 alfa es:  5
 
 
+----------------------GAMMA-------------------
+El calculo de la esperanza en la muestra es: 2.0004580050168888
+Teoricamente la Esperanza es =  2.0
+
+El calculo de la Varianza es =  1.9766942934792249
+Teoricamente la Varianza es =  2.0
+alfa
+Alfa:  1 Ka:  2
+
+
+El calculo de la esperanza en la muestra es: 1.2503501451892398
+Teoricamente la Esperanza es =  1.25
+
+El calculo de la Varianza es =  0.30789247702409156
+Teoricamente la Varianza es =  0.3125
+alfa
+Alfa:  4 Ka:  5
+
+
+El calculo de la esperanza en la muestra es: 0.8874065432128988
+Teoricamente la Esperanza es =  0.8888888888888888
+
+El calculo de la Varianza es =  0.09952622615608575
+Teoricamente la Varianza es =  0.09876543209876543
+alfa
+Alfa:  9 Ka:  8
+
+
+
 
 
 
