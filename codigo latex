@@ -1,0 +1,1449 @@
+% Tp Integrador
+% 1 - Introducción a la Simulación (qué es, por qué se estudia, etc.)
+% 2 - Ruleta
+% 3 - Distribuciónes de probabilidad (Naylor, podemos utilizar el codigo de Excel)
+% 4 - Generadores. GCL y cuadrados de los medios.
+% 5 - Tests de Chi2 y test de Corridas.
+
+% - Realizar en LaTex 
+% - Agregar teoría/explifcaciones para cada punto.
+% - Código anexo
+
+%--------------------------------------------------------
+
+\input{format.tex}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+\vspace*{0.5in}
+\textbf{\huge SIMULACION}
+\vspace*{1in}
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=4.5cm]{./img/logoutn.png}
+\end{center}
+\end{figure}
+
+\begin{LARGE}
+Universidad Tecnológica Nacional\\ 
+Facultad Regional Rosario \\
+\vspace*{1in}
+\textbf{\huge Trabajo Practico Integrador} \\
+\vspace*{0.8in}
+\end{LARGE}
+\begin{large}
+Integrantes:\\
+\vspace*{0.1in}
+Castillo, Gonzalo 43098\\
+Gatti Teixeira, Gianluca 43024\\
+Gonzalez,Joaquin 42838\\
+\vspace*{0.3in}
+Profesores: \\
+Flamini, Jorge\\
+Torres, Juan Ignacio\\
+\end{large}
+\end{center}
+
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\renewcommand*\contentsname{Indice}
+\clearpage
+
+
+% \begin{abstract}
+% En la siguiente presentación, se estudiarán distintos métodos de generación de variables aleatorias a partir de distintas distribuciones de probabilidad. 
+% Se usarán números aleatorios entre 0 y 1 generados automáticamente por la computadora para obtener los valores buscados, siguiendo el algoritmo de la Transformada Inversa aplicado a cada función de distribución.
+% Luego, se comparan los valores obtenidos con los métodos existentes en el lenguaje de programación utilizado, en este caso Python, para obtener valores aleatorios según cada distribución.
+% Por último, se comparan los estadísticos Promedio y Varianza, a partir de los valores generados y usando las fórmulas matemáticas correspondientes.
+
+
+
+
+
+\section{Introducción}
+% En el siguiente trabajo presentamos los temas del primer cuatrimestre de la materia Simulacion de la Universidad Tecnológica Nacional. Inicialmente, se describen distintas modelos poblacionales ... continuara
+\subsection{La Simulación}
+Llamamos sistema a un proceso de interés, y para estudiarlo científicamente tenemos que hacer suposiciones
+de cómo funciona.
+Estas suposiciones que usualmente toman forma de relaciones lógicas o matemáticas, constituyen un modelo
+que se usa para tratar de obtener un entendimiento de cómo el sistema se comporta.
+Si las relaciones que componen éste modelo son simples, podría ser posible usar métodos matemáticos para
+obtener la información exacta de las preguntas de interés; a esto se le llama una solución analítica. Sin
+embargo, la mayoría de los sistemas del mundo real son demasiados complejos para ser evaluados
+analíticamente, por lo que deben ser estudiados por simulación
+
+\subsection{Sistemas, modelos y simulación}
+
+Un sistema se define como una colección de entidades, como gente o máquinas, que actúan e interactúan
+juntos para lograr un objetivo lógico. En la práctica, lo que se refiere a “sistemas” depende de los objetivos de
+un estudio en particular.
+Definimos el estado de un sistema como una colección de variables necesarias para describir un sistema en
+un momento en particular, relativo a los objetivos del estudio.
+Categorizaremos a los sistemas en dos tipos: discretos y continuos. Un sistema discreto es aquel para el cual
+las variables de estado cambian instantáneamente en puntos de tiempo separados. Un sistema continuo es
+aquel para el cual las variables de estado cambian continuamente respecto al tiempo.
+En algún punto en la vida de la mayoría de los sistemas, hay una necesidad de estudiarlos para lograr una
+comprensión en las relaciones entre varios componentes:
+
+\begin{itemize}
+  \item  Experimentar con el sistema real vs. Experimentar con un modelo del sistema:
+Si es posible (y rentable), alterar el sistema físicamente y luego dejarlo operar bajo las nuevas condiciones. Sin
+embargo, raramente se hace esto, porque tal experimento costaría demasiado o perjudicaría al sistema.
+Usualmente es necesario construir un modelo como representación del sistema y estudiarlo como reemplazo
+del sistema real. Cuando usamos un modelo, siempre está la pregunta de si refleja con precisión al sistema
+para los propósitos de las decisiones a ser tomadas.
+  \item  Modelo físico vs. Modelo matemático:
+Los modelos físicos no son del típico tipo de modelos que son de interés en búsqueda de operaciones y
+análisis de sistemas.
+Los modelos matemáticos representan a un sistema en términos de relaciones lógicas y cuantitativas que
+luego son manipuladas y cambiadas para ver cómo el modelo reacciona, y por consiguiente, cómo reaccionaría
+si el modelo matemático es válido.
+  \item  Soluciones analíticas vs. Simulación:
+Una vez que construimos el modelo matemático, luego debe ser examinado para ver cómo puede ser usado
+para responder las preguntas de interés sobre el sistema que se supone representa. Si el modelo es simple,
+podría ser posible trabajar con sus relaciones y cantidades para obtener una solución exacta, analítica.
+Sin embargo, muchos sistemas son altamente complejos, por lo que modelos matemáticos válidos de ellos
+son también complejos, descartando toda posibilidad de una solución analítica. En éste caso, el modelo debe
+ser estudiado por medio de la simulación, trabajando numéricamente el modelo para las entradas en cuestión
+para ver cómo afectan las medidas de desempeño de salida.
+Dado que tenemos un modelo matemático a ser estudiado por medio se simulación, debemos buscar
+herramientas particulares para hacer esto. Es útil para éste propósito clasificar los modelos de simulación por
+tres diferentes dimensiones:
+  \item  Simulación de modelos estática vs. dinámica:
+Una simulación estática de un modelo es una representación de un sistema en un momento particular, o uno
+que puede ser usado para representar un sistema en el cual el tiempo no juega ningún papel. Una simulación
+dinámica de un modelo representa un sistema mientras evoluciona en el tiempo.
+  \item  Simulación de modelos determinística vs. estocástica:
+Si un modelo de simulación no posee componentes probabilísticos, se llama determinístico. Si un modelo de
+simulación tiene componentes de entrada aleatorios se llama estocástico.
+• Simulación de modelos discretos vs. continuos:
+Se define análogamente a sistemas discretos y continuos.
+\end{itemize}
+
+\subsection{Simulacion de eventos discretos}
+
+La simulación de eventos discretos concierne el modelado de un sistema mientras evoluciona en el tiempo
+por una representación en el cual las variables de estado cambian instantáneamente en puntos de tiempo
+separados. Estos puntos en el tiempo son en los cuales los eventos ocurren; donde un evento se define como
+una ocurrencia instantánea que podría cambiar el estado del sistema.
+
+\subsubsection{Mecanismos de avance en el tiempo}
+
+Debido a la naturaleza de los modelos de simulación de eventos discretos, debemos hacer un seguimiento del
+valor actual del tiempo simulado mientras la simulación procede, también necesitamos un mecanismo para
+avanzar el tiempo simulado de un valor a otro. Llamamos a la variable que da el valor actual del tiempo
+simulado, reloj de simulación.
+Se han sugerido dos métodos para avanzar el reloj de simulación: avance al próximo evento y avance de
+tiempo a incremento fijo.
+Con el avance de tiempo al próximo evento, el reloj de simulación es inicializado en cero y los tiempos de
+ocurrencia de eventos futuro son determinados. El reloj de simulación avanza al tiempo de ocurrencia del
+evento futuro más inminente, a tal punto, el estado del sistema se actualiza por el hecho de que tal evento ha
+ocurrido, y nuestro conocimiento de los tiempos de ocurrencia de eventos futuros es actualizado. Luego, el
+reloj de simulación avanza al tiempo de evento más inminente, el estado del sistema es actualizado y tiempo
+de eventos futuros son determinado.
+
+\subsubsection{Componentes y organización de un modelo de simulación de eventos discretos}
+
+\begin{itemize}
+  \item Estado del sistema: es la colección de variables de estado necesarias para describir al sistema en un tiempo
+particular.
+ \item Reloj de simulación: variable que da el valor actual del tiempo simulado.
+ \item Lista de eventos: lista que contiene el próximo tiempo en que cada tipo de evento ocurrirá.
+ \item Contadores estadísticos: variables utilizadas para almacenar información estadística sobre el desempeño del
+sistema.
+ \item Rutina de inicialización: es un subprograma que inicializa el modelo de simulación al tiempo cero.
+ \item Rutina de tiempo: subprograma que determina el próximo evento de la lista de eventos y luego actualiza el
+reloj de simulación al tiempo donde este evento ocurrirá.
+ \item Rutina de eventos: subprograma que actualiza el estado del sistema cuando un tipo de evento particular
+ocurre.
+ \item Rutina de librería: conjunto de subprogramas utilizados para generar observaciones aleatorias de
+distribuciones de probabilidad que fueron determinadas como parte del modelo de simulación.
+ \item Generador de reportes: es un subprograma que computa estimadores de las medidas de desempeño
+deseadas y produce un reporte cuando la simulación termina.
+ \item Programa principal: es un subprograma que invoca la rutina de tiempo para determinar el próximo evento y
+luego transfiere el control a la rutina de evento correspondiente para actualizar apropiadamente el estado del
+sistema. El programa principal podría también comprobar la terminación e invocar al generador de reportes
+cuando la simulación finalice.
+\end{itemize}
+
+\subsubsection{Diagrama de flujo del mecanismo de avance al próximo evento}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\linewidth, height=5cm]{img/PasosSimulacion.PNG}\\
+%   \caption{}
+\end{figure}
+\subsection{Introduccion a los numeros aleatorios}
+En este documento se encontrarán los trabajos prácticos correspondientes al primer cuatrimestre de la cátedra simulación.
+A continuación se realizará una  introducción a los números aleatorios que corresponden el principal eje conceptual de los distintos trabajos prácticos, junto con una breve descripción de los trabajos realizados y la importancia de las funciones desarrolladas en los mismos.\newline\newline
+\textbf{Los números aleatorios:}\\
+Para poder hablar de los mismos primero debemos definirlos. Según Wikipedia: “un número aleatorio es un resultado de una combinación variable al azar especificada por una función de distribución. Cuando no se especifica ninguna distribución, se presupone que se utiliza la distribución uniforme continua en el intervalo [0,1)”.
+ Según la página web estadísticas para todos estos números se definen como: “Un número aleatorio es aquel obtenido al azar, es decir, que todo número tenga la misma probabilidad de ser elegido y que la elección de uno no dependa de la elección del otro”.
+Lo que llevado a un lenguaje más cotidiano significa que los números aleatorios adoptan un valor al azar, y que este valor no depende de ningún otro número del conjunto de números aleatorios.
+Por otra parte, entrando en el terreno de los mismos aplicados a los procesos computacionales, existe la problemática de que resulta imposible generar números totalmente aleatorios, por lo tanto, el objetivo de innumerables análisis y estudios se centró en lograr procesos que logren imitarlos, es decir, ser capaces de conseguir la generación de números que actúen  de una forma muy similar a los definidos anteriormente. Estos números, generados por computadora con el fin de aproximar el comportamiento de los aleatorios, serán llamados pseudoaleatorios y exploraremos sus  utilidades para las técnicas de simulación así como algunos métodos para generarlos y para comprobar que eso que se ha generado (o cualquier otra lista, o serie de números) sea, en efecto un conjunto de números de naturaleza aleatoria.
+
+Una vez definidos los mismos es hora de hablar de la importancia de los estos en los modelos de simulación estocásticos. Una modelo de simulación estocástico es aquel que involucra componentes probabilísticos para ser llevado adelante. estos elementos pueden ser usados, por ejemplo para modelar el comportamiento de una variable, la cual puede comportarse de acuerdo a una distribución de probabilidad cualquiera, por lo que la capacidad de generar números pseudoaleatorios acordes con cada una de las distribuciones requeridas es una necesidad, sin la cual, no seríamos capaces de conseguir nuestro modelo.
+
+
+\newpage
+
+\section{Ruleta}
+\subsection{Marco Teórico}
+Estadística es la ciencia que estudia la recolección, análisis e interpretación de datos, ya sea para ayudar en la resolución de la toma de decisiones o para explicar condiciones regulares o irregulares de algún fenómeno o estudio aplicado, de ocurrencia en forma aleatoria o condicional, es además, el vehículo que permite llevar a cabo el proceso relacionado con la investigación científica.\\ 
+Si dichos datos son un subconjunto de una población mas grande, se dice que son ”datos muestrales”. En cambio, si este conjunto de datos abarca a toda la población, son ”datos poblacionales”.\\ 
+Para que estos datos resulten comprensibles es necesario organizarlos, representarlos gráficamente y definir medidas descriptivas que sinteticen la información.
+
+\subsubsection{Frecuencia Absoluta}
+La frecuencia absoluta es el número de veces que aparece un determinado valor en un estudio estadístico. La suma de las frecuencias absolutas es igual al número total de datos, que se representa por N.
+$$ \sum_{i=1}^{n}F_i = N $$
+
+\subsubsection{Frecuencia Relativa} \label{s:1.3}
+La frecuencia relativa es el cociente entre la frecuencia absoluta de un determinado valor y el número total de datos. La suma de las frecuencias relativas es igual a 1.
+$$ f_i=\frac{F_i}{N}$$ 
+$$ \sum_{i=1}^{n}f_i = 1$$
+
+\subsubsection{Esperanza} \label{s:1.4}
+En matemáticas y estadística, la esperanza, también llamada promedio o media, de un conjunto finito de números es el valor característico de una serie de datos cuantitativos, objeto de estudio que parte del principio de la esperanza matemática o valor esperado\\
+Si $x_1,x_2,x_3,... ,x_N$ es una población finita de tamaño $N$ entonces la esperanza de la población es:$$\mu = \frac{x_1+x_2+x_3+... +x_N}{N}=\frac{1}{N}\sum_{i=1}^{N}x_{i}$$ 
+
+\subsubsection{Varianza} \label{s:1.5}
+La varianza es una medida de dispersión que representa la variabilidad de una serie de datos respecto a su media.\\
+Si $x_1,x_2,x_3,... ,x_N$ es una población finita de tamaño $N$ se define la varianza poblacional como: $$\sigma^{2} = \frac{1}{N}\sum_{i=1}^{N}(x_i-\mu)^{2}$$
+
+\subsubsection{Histograma}
+Un histograma es una representación gráfica de una variable en forma de barras, donde la superficie de cada barra es proporcional a la frecuencia, ya sea absoluta o relativa, de los valores representados.\\
+Su función es exponer gráficamente números, variables y cifras de modo que los resultados se visualicen más clara y ordenadamente.\\
+Normalmente, las frecuencias son representadas en el eje vertical mientras que en el horizontal se representan los valores de cada una de las variables.
+
+\subsection{Metodología}
+Se realizó un algoritmo a través del cual simulamos una ruleta de 37 números incluido el 0. Se tomó una muestra de 1000 observaciones (números ganadores de cada girada de la ruleta), a partir de las cuales fueron calculadas la esperanza matemática, frecuencia relativa, desviacion estándar, varianza y esperanza matemática de la esperanza, basándonos en las siguientes.
+
+\subsubsection{Frecuencia relativa}
+Primero elegimos un valor al azar de la población, para posteriormente tomar este valor y analizar como evoluciona su frecuencia relativa a medida que generamos nuevos valores de la ruleta.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{img/frecrelativa.png}\\
+    \caption{Frecuencia Relativa}
+\end{figure}
+
+\subsubsection{Esperanza}
+Para realizar este experimento tomamos de a uno los elementos de la lista, y evaluamos la esperanza para cada nuevo valor que tomamos y la depositamos en una nueva lista.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{img/esperanza.png}\\
+    \caption{Esperanza Matemática}
+\end{figure}
+
+\subsubsection{Esperanza Matemática de Esperanza Matematica}  
+Al igual que el experimento anterior calculamos los valores de la esperanza pero utilizando como dato de entrada la lista de esperanzas calculada anteriormente
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{img/espespe.png}\\
+    \caption{Esperanza Matemática de Esperanza Matematica}
+\end{figure}
+
+\subsubsection{Varianza Matemática de la Esperanza}
+El objetivo de este experimento es calcular los valores de
+la varianza utilizando como datos los valores de la Esperanza.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{img/variazamatespmat.png}\\
+    \caption{Varianza Matemática de la Esperanza}
+\end{figure}
+
+\subsubsection{Desvio Estandar Matemático}    
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{img/desvioestandar.png}\\
+    \caption{Desvio Estandar Matemático}
+\end{figure}
+
+\subsubsection{Histograma}
+Para el último experimento tomamos nuevamente la lista de la ruleta inicial y colocamos en la función hist, perteneciente a la librerı́a matplotlib junto con la descripción de la distribución de los intervalos.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{img/numeroganado.png}\\
+    \caption{Histograma}
+\end{figure}
+
+
+\section{Distribuciones de Probabilidad}
+\subsection{Marco Teórico} \label{s:1}
+
+Si deseamos generar valores $x_i$ de las variables aleatorias a partir de cierta distribución población cuya función de densidad este dada por $f(x)$, debemos en primer lugar obtener la función de distribución acumulativa $F(x)$.  Puesto que $F(x)$ se define sobre el rango de 0 a 1, podemos generar números aleatorios distribuidos uniformemente y además $x$ quedara determinada por $r = F(x)$. \\
+Por lo tanto, para cualquier valor de r, siempre es posible encontrar el valor de x; debido a la función inversa de $F(x)$, si es conocida. Esto es, $$x_i = F^{-1}(r_i)$$
+
+\subsubsection{Distribución Uniforme}
+La distribución Uniforme es la distribucion continua más simple. Corresponde al caso de una variable aleatoria que sólo puede tomar valores comprendidos entre dos extremos a y b, de manera que todos los intervalos de igual amplitud contenidos entre [a,b] tienen lamisma probabilidad de ocurrir.\\
+Su funcion de densidad uniforme se define:
+$$
+  \ f(x) =
+    \begin{cases}
+      \frac{1}{b - a} & {para}\ a \le x \le b \\
+      0 & \mathrm{para}\ x<a\ \mathrm{o}\ x>b
+    \end{cases}
+$$
+
+Su funcion acumulativa se puede representar: 
+  $$ F(x) =\frac{x - a}{b - a} \ {para}\ 0 \le F(x) \le 1 $$
+
+
+\subsubsection{Distribucion Exponencial}
+La distribución exponencial es una distribución de probabilidad continua con un parámetro $\lambda > 0$ y $x > 0 $  cuya función de densidad es: $$f(x)= \lambda e^{-\lambda x}$$
+
+Su funcion acumulativa es:
+ $$F(x)= 1-e^{-\lambda x}$$ 
+
+\subsubsection{Distribucion Gamma}
+La distribución gamma es una distribución de probabilidad continua con dos parámetros k y $\lambda$  cuya función de densidad para valores  $k>0$ y $\lambda>0$ es:
+
+$$f(x)=\frac{\lambda^k x^{k-1}e^{-\lambda x}}{(k-1)!}$$
+
+Debido a que para una distribucion gamma no se pueden formular exprícitamente una función de distribución acumulativa, debemos considerar un método alternativo para generar valores de variable aleatoria con distribucion gamma. Para eso tomaremos la suma de los k valores con distribucion exponencial de $x_1, x_2, ..., x_k$ cuyo valor esperado es el mismo e igual a $1/\lambda$. En consecuencia, el valor de x se puede escribir como:
+$$ x = \sum_{i=1}^{k}x_i = -\frac{1}{\lambda}\sum_{i=1}^{k}\log{r_i}$$
+Otra expresion equivalente y mas rapida computacionalmente es:
+$$ x = -\frac{1}{\alpha}(\log\prod_{i=1}^{k} r_i)$$
+
+\subsubsection{Distribucion Normal}
+Decimos que una variable x tiene una distribución normal de parametros $\mu$ y
+2fotraz
+ $\sigma$, con $\sigma > 0$, cuando su funcion de densidada de probabilidad es
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-1/2(\frac{x-\mu}{\sigma})^2}$$
+
+La funcion de distribucion acumulativa $F(x)$ no existen en forma explícita.\\
+Para generar valores de variable aleatoria distribuidos en forma normal utilizamos el procedimiento conocido como del limite central. El cual requiere el uso de la suma de K valores de variable aleatoria distribuidos uniformemente; esto es, la suma de $r_1,r_2,...,r_K$, con cada $r_i$ definida en el intervalo $0< r_i <1$ donde obtenemos
+
+$$x = \sigma \left(\frac{12}{K}\right)^{1/2}\left(\sum_{i=1}^{K}r_i - \frac{K}{2}\right)+\mu$$
+Para lograr una ventaja computacional utilizaremos un K=12, ya que evitaremos una multiplicacion constante
+
+\subsubsection{Distribucion Binomial}
+La distribución binomial proporciona la probabilidad de que un evento o acontecimiento tenga lugar x veces en un conjunto de n ensayos, donde la probabilidad de éxito está dada por p. La función de probabilidad para la distribución binomial se puede expresar de la siguiente manera:
+
+$$f(x) = \binom{n}{x}p^{x}q^{n-x}$$
+donde x se lo toma como un entero definido en el intervalo finito 0,1,2,...n, y al que se le asocia el valor $q = (1-p)$ \\
+Para generar valorer aleatorios con distribución binomial, utilizaremos el metedo basado en la reproduccion de ensayo de Bernoulli, sigueindo el metodo de rechazo. Este metodo empieza con valores conocidos de p y de n y consiste en generar n numeros aleatorios despues de fijar $x_0$ igual a cero. Para cada numero aleatorio $r_i$ $(1\leq i \leq n)$ se efectúa una prueba y la vatiables $x_i$ se incrementan de acuerdo con el siguiente criterio: 
+$$ x_i = x_{i-1}+1  \quad \textrm{si} \quad r_i-p < 0 $$
+$$ x_i = x_{i-1}  \quad \textrm{si} \quad r_i-p > 0 $$
+
+\subsubsection{Distrubución de Poisson}
+ La distribución de Poisson es una distribución de probabilidad discreta que expresa, a partir de una frecuencia de ocurrencia media, la probabilidad de que ocurra un determinado número de eventos durante cierto período de tiempo. Concretamente, se especializa en la probabilidad de ocurrencia de sucesos con probabilidades muy pequeñas, o sucesos "raros". 
+ 
+ La función de masa de probabilidad de la distribución de Poisson es
+
+$$f(k,\lambda)=\frac{e^{-\lambda} \lambda^k}{k!}$$
+donde:
+\begin{itemize}
+  \item k es el número de ocurrencias del evento o fenómeno (la función nos da la probabilidad de que el evento suceda precisamente ''k'' veces).
+  \item $\lambda$ es un parámetro positivo que representa el número de veces que se espera que ocurra el fenómeno durante un intervalo dado. Por ejemplo, si el suceso estudiado tiene lugar en promedio 4 veces por minuto y estamos interesados en la probabilidad de que ocurra $k$ veces dentro de un intervalo de 10 minutos, usaremos un modelo de distribución de Poisson con $\lambda = 10$x$ 4 = 40$.
+\end{itemize}
+
+Tanto el valor esperado como la varianza de una variable aleatoria con distribución de Poisson son iguales a $\lambda$. 
+
+
+\subsection{Metodología}
+La lógica utilizada en cada programa es la siguiente:
+
+\begin{enumerate}
+  \item Se define la cantidad de muestras, y los parámetros necesarios según cada distribución.
+  \item Se generan los valores aleatorios utilizando el método de la Transformada Inversa o el método proporcionado por el lenguaje.
+\item Se introducen los valores obtenidos en un arreglo del tamaño de la cantidad de muestras y se generan los valores de los estadísticos mediante funciones de la librería numpy de Python.
+  \item Finalmente, se crean los gráficos necesarios mediante la librería matplotlib, para poder comparar los valores obtenidos visualmente.
+\end{enumerate}
+
+\title{}
+
+\subsection{Casos de estudio}
+
+\subsubsection{Distribución Uniforme}
+
+Datos obtenidos durante la ejecución, para el intervalo \\
+comprendido entre $a=40$ y $b=90$:\\
+Con un tamaño de muestra de muestra de 1000:
+\begin{figure}[hbt!]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/uniforme1.png}\\
+    \caption{Muestra 1000 valores con Distribución Uniforme}
+\end{figure}
+
+\begin{itemize}
+  \item El promedio según la fórmula del general $\frac{(a + b)}{2}: 500.0$
+  \item El promedio según la función de Python es: $503.811013$
+  \item La varianza según la fórmula $\frac{(b - a)^2}{12} = 83333.3333$
+  \item La varianza según la función de Python es: $83056.780644$
+  \item La desviación estandar según la formula es: $288.6751340$
+  \item La desviación estandar según la funcion de python es: $288.195733$
+\end{itemize}
+
+Con un tamaño de muestra de 10000:
+\begin{figure}[hbt!]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/uniforme2.png}\\
+   \caption{Muestra 10000 valores con Distribución Uniforme}
+\end{figure}
+
+\begin{itemize}
+  \item El promedio según la fórmula del general $\frac{(a + b)}{2}:5000.0$
+  \item El promedio según la función de Python es: $5052.077769$
+  \item La varianza según la fórmula $\frac{(b - a)^2}{12} = 8333333.333333$
+  \item La varianza según la función de Python es: $8375512.825178$
+  \item La desviación estandar según la formula es: $2886.751345$
+  \item La desviación estandar según la funcion de python es: $2894.047827$
+\end{itemize}
+
+Con un tamaño de muestra de muestra de 100000:
+\begin{figure}[hbt!]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/uniforme3.png}\\
+   \caption{Muestra 100000 valores con Distribución Uniforme}
+\end{figure}
+
+\begin{itemize}
+  \item El promedio según la fórmula del general $\frac{(a + b)}{2}: 50000.0$
+  \item El promedio según la función de Python es: $50065.041559$
+  \item La varianza según la fórmula $\frac{(b - a)^2}{12} = 833333333.3333$
+  \item La varianza según la función de Python es: $828049794.017$
+  \item La desviación estandar según la formula es: $28867.513459$
+  \item La desviación estandar según la funcion de python es: $28775.85435$
+\end{itemize}
+
+\subsubsection{Distribución Exponencial}
+Datos obtenidos durante la ejecución para $\lambda=2$:\\
+Con un tamaño de muestra de muestra de 1000:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/exp1.png}\\
+   \caption{Muestra 1000 valores con Distribución Exponencial con $\lambda=2$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la esperanza en la muestra  es:$0.502298$
+  \item Teoricamente la esperanza es: $0.5$
+  \item El calculo de la varianza en la muestra es: $0.235934$
+  \item Teoricamente la varianza es:  $0.25$
+
+\end{itemize}
+
+Datos obtenidos durante la ejecución para $\lambda=3$:\\
+Con un tamaño de muestra de muestra de 1000:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/exp2.png}\\
+   \caption{Muestra 1000 valores con Distribución Exponencial con $\lambda=3$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la esperanza en la muestra  es:$ 0.33823$
+  \item Teoricamente la esperanza es: $0.33$
+  \item El calculo de la varianza en la muestra es: $ 0.1060189$
+  \item Teoricamente la varianza es:  $0.11$
+\end{itemize}
+\newpage
+Datos obtenidos durante la ejecución para $\lambda=5$:\\
+Con un tamaño de muestra de muestra de 1000:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/exp3.png}\\
+   \caption{Muestra 1000 valores con Distribución Exponencial con $\lambda=5$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la esperanza en la muestra  es:$ 0.19403$
+  \item Teoricamente la esperanza es: $0.2$
+  \item El calculo de la varianza en la muestra es: $0.037373$
+  \item Teoricamente la varianza es:  $0.04$
+\end{itemize}
+
+\subsubsection{Distribución Gamma}
+Datos obtenidos durante la ejecución para $\lambda=1$ y $k = 2$:\\
+Con un tamaño de muestra de muestra de 10000:
+
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/GAMMA1.png}\\
+   \caption{Muestra 10000 valores con Distribución Gamma para $\lambda=1$ y $k = 2$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la esperanza en la muestra es: $2.000458$
+  \item Teoricamente la Esperanza es:$2.0 $
+  \item El calculo de la Varianza es: $ 1.976694$
+  \item Teoricamente la Varianza es: $2.0 $
+\end{itemize}
+
+Datos obtenidos durante la ejecución para $\lambda=4$ y $k = 5$:\\
+Con un tamaño de muestra de muestra de 10000:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/GAMMA2.png}\\
+   \caption{Muestra 10000 valores con Distribución Gamma para $\lambda=4$ y $k = 5$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la esperanza en la muestra es: $1.250350 $
+  \item Teoricamente la Esperanza es:$1.25 $
+  \item El calculo de la Varianza es: $0.3078924 $
+  \item Teoricamente la Varianza es: $0.3125 $
+\end{itemize}
+
+Datos obtenidos durante la ejecución para $\lambda=9$ y $k = 8$:\\
+Con un tamaño de muestra de muestra de 10000:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/GAMMA3.png}\\
+   \caption{Muestra 10000 valores con Distribución Gamma para $\lambda=9$ y $k = 8$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la esperanza en la muestra es: $0.88740 $
+  \item Teoricamente la Esperanza es:$ 0.88 $
+  \item El calculo de la Varianza es: $0.099526 $
+  \item Teoricamente la Varianza es: $ 0.098765 $
+\end{itemize}
+
+
+\subsubsection{Distribución Normal}
+Datos obtenidos durante la ejecución para $\mu=20$ y $\sigma = 2$:\\
+Con un tamaño de muestra de muestra de 1000:
+
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/normal1.png}\\
+   \caption{Muestra 1000 valores con Distribución Normal para $\mu=20$ y $\sigma = 2$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $19.938326$
+  \item Teoricamente es:  $20$
+  \item El calculo de la Varianza de los valores generados es  $ 4.245192$
+  \item Teoricamente es: $4$
+  \item El calculo de la Varianza de los valores generados es  $ 2.060386$
+  \item Teoricamente es  $2$
+\end{itemize}
+
+Datos obtenidos durante la ejecución para $\mu=25$ y $\sigma = 3$:\\
+Con un tamaño de muestra de muestra de 1000:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/normal2.png}\\
+   \caption{Muestra 1000 valores con Distribución Normal para $\mu=20$ y $\sigma = 2$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $24.883818$
+  \item Teoricamente es:  $25$
+  \item El calculo de la Varianza de los valores generados es  $ 8.423882$
+  \item Teoricamente es: $9$
+  \item El calculo de la Varianza de los valores generados es  $ 2.902392$
+  \item Teoricamente es  $3$
+\end{itemize}
+
+Datos obtenidos durante la ejecución para $\mu=30$ y $\sigma = 5$:\\
+Con un tamaño de muestra de muestra de 1000:
+\begin{figure}[hbt!]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/normal3.png}\\
+   \caption{Muestra 1000 valores con Distribución Normal para $\mu=30$ y $\sigma = 5$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $29.823058$
+  \item Teoricamente es:  $30$
+  \item El calculo de la Varianza de los valores generados es  $23.82459$
+  \item Teoricamente es: $25$
+  \item El calculo de la Varianza de los valores generados es  $ 4.88104$
+  \item Teoricamente es  $5$
+\end{itemize}
+
+\newpage
+
+\subsubsection{Distribución Binominal}
+Datos obtenidos durante la ejecución para un suceso con una probabilidad de ocurrencia de $0.8$\\
+
+Con un tamaño de muestra de muestra de 800:
+
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/binomial1.png}\\
+   \caption{Muestra 800 valores con Distribución Binominal con probabilidad de ocurrencia de $0.8$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $640.223$
+  \item Teoricamente es: $640.0$
+  \item El calculo de la Varianza de los valores generados es:  $128.179271$
+  \item Teoricamente es:$127.997$
+  \item El Desvio Estandar de los valores generados es: $ 11.32162$
+  \item Teoricamente es: $11.3137$
+\end{itemize}
+
+Datos obtenidos durante la ejecución para un suceso con una probabilidad de ocurrencia de $0.6$\\
+
+Con un tamaño de muestra de muestra de 900:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/binomial2.png}\\
+   \caption{Muestra 900 valores con Distribución Binominal con probabilidad de ocurrencia de $0.6$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $539.644$
+  \item Teoricamente es: $540.0$
+  \item El calculo de la Varianza de los valores generados es:  $217.261$
+  \item Teoricamente es:$216.0$
+  \item El Desvio Estandar de los valores generados es: $ 14.7397$
+  \item Teoricamente es: $14.6969$
+\end{itemize}
+
+Datos obtenidos durante la ejecución para un suceso con una probabilidad de ocurrencia de $0.2$\\
+
+Con un tamaño de muestra de muestra de 1000:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/binomial3.png}\\
+   \caption{Muestra 1000 valores con Distribución Binominal con probabilidad de ocurrencia de $0.2$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $200.459$
+  \item Teoricamente es: $200.0$
+  \item El calculo de la Varianza de los valores generados es:  $172.240$
+  \item Teoricamente es:$160.0$
+  \item El Desvio Estandar de los valores generados es: $  13.124$
+  \item Teoricamente es: $12.649$
+\end{itemize}
+
+\newpage
+
+\subsubsection{Distribución Poisson}
+Datos obtenidos durante la ejecución para $\lambda=10$\\
+Con un tamaño de muestra de muestra de 1000:
+
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/poisson1.png}\\
+   \caption{Muestra 1000 valores con Distribución Poisson para $\lambda=10$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $10.048$
+  \item Teoricamente es: $10$
+  \item El calculo de la Varianza de los valores generados es:  $10.729696$
+  \item Teoricamente es:$10$
+  \item El Desvio Estandar de los valores generados es: $3.275621$
+  \item Teoricamente es: $3.16227$
+\end{itemize}
+
+Datos obtenidos durante la ejecución para $\lambda=7$\\
+Con un tamaño de muestra de muestra de 1000:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/poisson2.png}\\
+   \caption{Muestra 1000 valores con Distribución Poisson para $\lambda=7$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $7.052$
+  \item Teoricamente es: $7$
+  \item El calculo de la Varianza de los valores generados es:  $6.5952$
+  \item Teoricamente es:$7$
+  \item El Desvio Estandar de los valores generados es: $2.56813$
+  \item Teoricamente es: $2.6457$
+\end{itemize}
+
+Datos obtenidos durante la ejecución para $\lambda=4$\\
+Con un tamaño de muestra de muestra de 1000:
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/poisson3.png}\\
+   \caption{Muestra 1000 valores con Distribución Poisson para $\lambda=7$}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $3.973$
+  \item Teoricamente es: $4$
+  \item El calculo de la Varianza de los valores generados es:  $ 4.238271$
+  \item Teoricamente es:$4$
+  \item El Desvio Estandar de los valores generados es: $2.058706$
+  \item Teoricamente es: $2.0$
+\end{itemize}
+
+\newpage
+
+\subsubsection{Distribución Empírica}
+Datos obtenidos durante la ejecución para un conjunto de datos distribuiados empiricamente
+Con un tamaño de muestra de muestra de 1000:
+
+\begin{figure}[H]
+ \centering
+   \includegraphics[width=\linewidth, height=5cm]{img/empirica.png}\\
+   \caption{Muestra 1000 valores distribuidos empiricamete}
+\end{figure}
+\begin{itemize}
+  \item El calculo de la Esperanza de los valores generados es: $3.975$
+  \item El calculo de la Varianza de los valores generados es:  $2.278653$
+\end{itemize}
+
+
+% \begin{figure}[h!]
+% \centering
+%   \includegraphics[width=\linewidth, height=5cm]{filename}\\
+%   \caption{ Leyenda}
+% \end{figure}
+
+\subsection{Conclusiones}
+De el trabajo realizado, y observando los diferentes resultados obtenidos variando los parametros pertinentes, se puede concluir que, si bien es sabido que existen metodos altamante eficientes y con un desempeño y capacidades mucho mejores a la hora de generar números aleatorios, los valores creados con bases en el método de la transformación inversa, satisfacen ampliamente las necesidades de una generación pseudoaleatorioa de números que se ajusten a una determinada distribución. Esto resulta facil de ver a la hora de comparar los márgenes y diferencias que existen entre los parámetros (media, esperanza, varianza) de valores generados aleatoriamente con los respectivos cálculos teóricos de los mismos, siendo estas diferencias muy pequeñas, lo cuál es esperable e inclusive lógico ya que se trata de valores generados de manera pseudoaleatoria a fin de cuentas.
+
+\newpage
+
+\section{Generacion de Números Aleatorios}
+\subsection{Introduccion}
+Analizaresmos dos formas de producir una secuencia de numeros sin orden aparente.\\
+Tendremos en cuenta las siguentes propiedades para determinar un buen generador de números aleatorios:
+\begin{itemize}
+  \item Los valores generados están distribuidos uniforme en el intervalo (0,1).
+  \item Los valores generados son valores no correlacionados es decir
+independientes en términos estadisticos.
+  \item Es posible regenerar una secuencia de números aleatorios. Necesario
+cuando se quiere comparar 2 o más alternativas y se desea someterlas a la misma situación de eventos
+generados.
+  \item  Computacionalmente eficiente.
+\end{itemize}
+Los numeros obtenidos por generadores que no cumplen algunas de estas condiciones se los suele llaman numeros pseudoaleatorios. \\
+Los metodos que utilizaremos tienen una correlacion en su generacion, pero si no tomamos en cuenta su generacion son independientes.
+
+\subsection{Método cuadrado de los medios}
+El método consiste en tomar un número al azar, de 4 cifras como la semilla del generador ($Z_0$), que al ser elevado al cuadrado resulta un número de hasta 8 cifras, de no ser así se deben agregar ceros a la izquierda de dicho resultado para que éste tenga exactamente 8 cifras.\\
+Tomar las cuatro cifras centrales como el proximo $Z_i$. 
+Calcular $U_i = Z_i / 10000$.
+
+Con el siguiente ejemplo observaremos algunos de los problemas del metodo. Comenzamos con $Z_0 = 1009$.
+\begin{center}
+ \begin{tabular}{|c | c | c | c|} 
+ \hline
+ $i$ & $Z_i$ & $U_i$ & $Z_i^{2}$ \\ [0.5ex] 
+ \hline\hline
+ 0 & 1009 & - & 01018081 \\ 
+ \hline
+ 1 & 180 & 0,018 & 00032400 \\
+ \hline
+ 2 & 324 & 0.0324 & 00104976 \\
+ \hline
+ 3 & 1049 & 0.1049 & 01100401 \\
+ \hline
+ 4 & 1004 & 0.1004 & 01008016 \\ 
+ \hline
+ 5 & 80 & 0.0080 & 00006400 \\
+ \hline
+ 6 & 64 & 0.0064 & 00004096 \\ 
+ \hline
+ 7 & 40 & 0.0040 & 00001600 \\
+ \hline
+ 8 & 16 & 0.0016 & 00000256 \\ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
+Al ver los resultados, podemos analisar que el metodo tiene una fuerte tendencia a degenerarse a cero rapidamente. Por lo cual no estaria cumpliendo con la condicion de se Uniforme en el intervalo (0,1).\\
+Otro inconveniente que puede suceder es que Los números generados pueden repetirse cíclicamente después de una secuencia corta.
+
+\subsection{Método Congruencial Lineal}
+Generador Congruencial lineal mixto $c > 0$
+$Z_i$ es derivado a partir del número pseudoaleatorio $Z_{i-1}$ La relación de recurrencia para el generador congruencial mixto es \\ $Z_i =(a*Z_{i-1}+c)$ mod m, en donde:
+\begin{itemize}
+  \item a es el multiplicador y entero mayor que cero 
+  \item c es el incremento y entero mayor que cero
+  \item m es el modulo
+  \item $Z_0$ es la semilla apartir de la cual se puede calcular 
+  \item $Z_i$ es entero mayor que cero
+\end{itemize}
+Ademas debe ser $m>0$, $m>a$, $m>c$ y $m>Z_i$
+
+Luego calcular: $$U_i=\frac{Z_i}{m}$$ 
+
+
+Con el siguiente codigo de Python procedemos analizar el metodo por lo cual utilizaremos los siguinetes valores.\\ $Z_0 = 7$ $a = 5$ $c = 3$ $m = 16$
+\begin{minted}[framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,]
+{python}
+a=5
+c=3
+m=16
+z=7 
+lista=[]
+
+for i in range(20):
+    z=(a*z+c)%m
+    lista.append(z)
+print(lista)
+\end{minted}
+Luego obtendremos la siguiente secuencia de numeros:
+\begin{center}
+ \begin{tabular}{|c | c | c|} 
+ \hline
+ $i$ & $Z_i$ & $U_i$ \\ [0.5ex] 
+ \hline\hline
+ 0 & 7 & - \\ 
+ \hline
+ 1 & 6 & 0.375 \\
+ \hline
+ 2 & 1 & 0.0625 \\
+ \hline
+ 3 & 8 & 0.500 \\
+ \hline
+ 4 & 11 & 0.6875 \\ 
+ \hline
+ 5 & 10 & 0.625  \\
+ \hline
+ 6 & 5 & 0.3125  \\ 
+ \hline
+ 7 & 12 & 0.75 \\
+ \hline
+ 8 & 15 & 0.9375  \\
+ \hline
+ 9 & 14 & 0,875 \\
+ \hline
+ 10 & 9 & 0.5625 \\
+ \hline
+ 11 & 0 & 0 \\
+ \hline
+ 12 & 3 & 0.1875 \\ 
+ \hline
+ 13 & 2 & 0.125  \\
+ \hline
+ 14 & 13 & 0.8125  \\ 
+ \hline
+ 15 & 4 & 0.250 \\
+ \hline
+ 16 & 7 & 0.9375  \\
+  \hline
+ 17 & 6 & 0.375  \\
+ \hline
+ 18 & 1 & 0.0625  \\ 
+ \hline
+ 19 & 8 & 0.500 \\
+ \hline
+ 20 & 11 & 0.6875  \\ [1ex] 
+ \hline
+\end{tabular}
+\end{center}
+
+Al analizar los resultados, nos encontramos que los valores que puede tomar $Z_i$, estan determinados por la funcion del módulo m, ahora bien es posible que el generador no alcance a los m números distintos, debido a la seleccion de los parametos  $Z_0$, a, c y m.\\
+Por lo tanto para construir un generador de periodo completo, es decir p (el periodo del generador) = m (el parametro m del generador GCL) debemos aplicar el siguiente teorema a partir de los valores de los paramtros:
+\begin{itemize}
+  \item El único entero que divide a y c en forma simultanea (primos entre si) es 1
+  \item Si q es un número primo que divide a m, entonces q divide a a -1
+  \item Si 4 divide a m, entonces 4 divide a a -1 
+\end{itemize}
+
+Los GLCs más eficientes tienen un módulo igual a una potencia de 2, siendo más frecuentes $m=2^{32}$ o $m=2^{64}$.
+
+\section{Test de números aletorios}
+
+\subsection{Introducción}
+En esta sección se comprobará la calidad de los números aleatorios obtenidos de distintas fuentes y mediante distintos métodos. 
+Las dos propiedades esperadas más importantes en los números aleatorios son la uniformidad y la independencia. 
+Para verificar la uniformidad se realiza la prueba de bondad de ajuste, en la que partiendo de una cantidad suficiente de números, se comprueba su distribución con respecto a la distribución uniforme teórica mediante el método de Chi-Cuadrado. 
+Este tipo de prueba es denominada “Prueba de Frecuencias”.
+Para verificar la independencia, se aplicará al conjunto de números la prueba de corridas arriba-abajo. Esta prueba detectará si hay un patrón estadísticamente inaceptable de incremento o decremento entre números adyacentes de un determinado flujo.
+
+Las fuentes utilizadas serán:
+\begin{itemize}
+    \item La función de la librería random 
+    \item El método: Generador Congruencial Lineal Mixto.
+    \item Valores obtenidos de la página random.org. (Mediante una función programada en Python usando la librería http para obtener los datos).
+\end{itemize}{}
+
+\subsection{Test de Chi-Cuadrado}
+La prueba Chi-Cuadrado en lugar de medir la difencia de cada punto entre la muestra y la desviacion verdadera,chequea la desviacion del valor esperado.
+
+$$X_{calculada}^{2}= \sum_{i=1}^{n} \frac{(O_{i}-E_{i})^{2}}{E_{i}}  $$
+
+Donde n es el numero de intervalos de clase, Oi el numero observado en la clase Iva y Ei el numero esperado en cada clase Iva. Para una distribucion uniforme, Ei el numero en cada clase esta dado por:
+
+              $$ E_{i}= \frac{N}{n}  $$
+             
+Para clases igualmente espaciadas, donde N es el numero total de observaciones. Puede ser mostrado que la distribucion de la muestra Chi-Cuadrado esta aproximadamente a la distribucion Chi-Cuadrado con n-1 grados de libertad
+
+\subsection{Metodología}
+La lógica utilizada en cada programa es la siguiente:
+
+\begin{enumerate}
+  \item Dividir el intervalo (0,1) k intervalos de igual longitud con k $\ge$ 5 .
+  \item Se generan n valores random con la distribucion uniforme, con un n determinado de tal manera que $\frac{n}{k}\ge 5$ .
+  \item Calcular $f_j$ donde esta es la fecuencia absoluta de la cantidad de $u_i$(valores) que cayeron en el intervalo j.
+  \item Se calcula el valor de Chi-Cuadrado con la formula $X^2 =\frac{k}{n}\sum_{j=1}^{k}(f_j-\frac{n}{k})^2 $ .
+  \item Se compara el valor calculado anteriormente con un valor de tabla Chi-Chuadrado con k-1 grados de libertad y 1-$\alpha$ (nivel de confianza).
+\end{enumerate}           
+
+\subsection{Test de Corridas}
+Una prueba de Corridas es un método que nos ayuda a evaluar el carácter de aleatoriedad de una
+secuencia de números estadísticamente independientes y números uniformemente distribuidos. Es
+decir dado una serie de números determinar si son o no aleatorios.
+Existen dos versiones de la prueba de corridas:
+• Prueba de corridas arriba y abajo (ascendente y descendente).
+• Prueba de corridas arriba y abajo de la media (promedio).
+\subsubsection{Prueba de corridas Arriba y Abajo}
+Si tenemos una secuencia de números de tal manera que a cada uno de los números siga otro
+mayor la secuencia dada será ascendente (arriba).
+Si cada número va seguido por otro menor, la secuencia será descendente (abajo).
+
+Pasos para evaluar una prueba de corridas:
+
+\begin{enumerate}
+  \item  Primeramente le asignaremos un signo a cada número de la secuencia ya sea + ó - , eso
+dependerá de los siguiente.
+  \item  Si a un número le sigue otro mayor, se le asigna +. Esto es si $ X_{i} < X_{i+1} $  el signo asignado
+será (+). Siendo $X_i$ un número de la muestra o secuencia de números.
+  \item Si el número siguiente es menor, se le da un signo -. Esto es si $ X_{i} < X_{i+1} $ el signo asignado
+será (-).
+\end{enumerate}
+Se continuará con la comparación de los números y la asignación de su signo
+correspondiente hasta N-1. Es decir hasta el penúltimo numero de la secuencia, ya que al
+último número le sigue un evento nulo(no es posible compararlo con otro número).\\
+Para poder generar generar un valor de Chi-Cuadrado con la cantidad de secuencias o corridas de longitud i se necesita clasificar a $r_i$ \hspace{1mm} en:\\
+  $$r_{i}= \left\lbrace\frac{cantidad\hspace{0.5mm} de\hspace{0.5mm} subsecuencias\hspace{0.5mm} de\hspace{0.5mm} longitud\hspace{0.5mm} i\hspace{0.5mm} con\hspace{0.5mm} i=1,2,3,4,5}{cantidad\hspace{1mm} de\hspace{1mm} subsecuencias\hspace{1mm} de\hspace{1mm} longitud\hspace{1mm} i\hspace{1mm} con\hspace{1mm} i\ge 6}\right\rbrace$$ \\
+  
+Una vez separada las subsecuencias de longitudes se pasa a generar un valor de Chi-Cuadrado(R) con la siguente formula\\
+
+$$R=\frac{1}{n}\sum_{i=1}^{6}\sum_{j=1}^{6} a_{ij}(r_{i}-nb_{i})(r_{j}-nb_{j}) $$
+
+Donde $a_ij$ esta dado por los la interseccion de la fila i columna j de la siguiente tabla:
+\begin{center}
+ \begin{tabular}{|c | c | c | c | c | c|} 
+ \hline
+4529.4 &   9044.9 &  13568 &   18091 &   22615 &  27892 \\ 
+ \hline
+9044.9 &   18097 &    27139 & 36187 &  45234 & 55789 \\ 
+ \hline
+13568 &    27139 &    40721 &   54281 &   67852&   83685 \\
+ \hline
+18091 &   36187 &   54281 &  72414 &   90470 &  111580 \\
+ \hline
+22615 &  45234 &   67852 &    90470 &  113262 &  139476 \\ 
+ \hline
+27892 &   55789 &  83685 &   111580 & 139476 & 172860 \\ [1ex] 
+\hline
+\end{tabular}
+\end{center}
+
+Y $b_j$ se toma de la tabla:
+
+\begin{center}
+ \begin{tabular}{|c | c | c | c | c | c |} 
+ \hline 
+ 1/6 & 5/24 & 11/120 & 19/720 & 29/5040 & 1/840
+ \\ [1ex] 
+\hline
+\end{tabular}
+\end{center}
+
+
+\newpage
+\clearpage
+\newpage
+\subsection{Anexo 1: Codigo Fuente Ruleta}
+\begin{minted}[
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+]{python}
+import numpy
+import random
+import matplotlib.pyplot as plt
+from scipy import stats
+
+def crearRuleta(ruleta,cantNum):
+ for i in range(0, cantNum):
+     ruleta[i] = i
+ return ruleta
+
+def girarRuleta(ruleta):
+     num=random.choice(ruleta)                      #Elije algun valor en la lista Ruleta
+     return num
+
+def calculoEsperanza(lista):
+ esperanza= numpy.mean(lista)                       #Calcula la esperanza matematica de los datos
+ return esperanza
+
+def calculoDesvioEstandar(lista):
+    desviacionEstandar=numpy.std(lista)             #Calcula el desvio estandar de los datos
+    return desviacionEstandar
+
+def calculoVarianza(lista):
+    varianza=numpy.var(lista)                       #Calcula la varianza de los datos
+    return varianza
+
+def calculoFrecuenciaRelativaDeCadaElemento(lista,ruleta,cantTiradas):
+   frecNumeros=[]
+   vecesNumeros=[]
+   for i in range(0, len(ruleta)):
+        vecesNumeros.append(lista.count(ruleta[i]))    #Cuenta la cantidad de veces que aparecio cada numero
+        frecNumeros.append(vecesNumeros[i]/cantTiradas)        
+   print("\nLas veces que aparecio cada numero es = ",vecesNumeros)
+   print("La frecuencia relativa de los numeros es= ",frecNumeros)
+
+def calculoFrecuanciaRel(lista,nroTirada):
+    frecRelativa=[]
+    frecRelativa.append(lista.count(5)/(nroTirada+1)) #Misma idea que Gianluca para ver con que frecuencia sale un valor
+    return frecRelativa
+
+def creoGraficosFrecRelativa(lista,cantTiradas):
+    plt.title('Frecuencia relativa')
+    plt.plot(lista)
+    plt.xlabel("Tiradas")
+    plt.ylabel("Probabilidad ")
+    plt.axhline(1/37, color='k',ls="dotted", xmax=cantTiradas)      #Comando para linea horizontal constante
+    plt.ylim(0,0.5)                                                 #Limites para el eje Y
+    plt.xlim(0,cantTiradas)                                         #Limites para el eje X
+    plt.show()
+
+def creoGraficoEsperanza(lista,cantTiradas):
+    plt.title('Esperanza matematica')
+    plt.plot(lista)
+    plt.xlabel("Tiradas")
+    plt.ylabel("Valor")
+    plt.ylim(0,37)
+    plt.xlim(0,cantTiradas)
+    plt.axhline(18,color='k', ls="dotted", xmax=cantTiradas)        #ls es el tipo de linea
+    plt.show()
+\end{minted}  
+\newpage
+\clearpage
+\newpage
+
+\subsection{Anexo 1: Codigo Fuente Ruleta}
+\begin{minted}[
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+]{python}
+def creoGraficoHistograma(lista):
+   plt.figure("Grafico de Frecuencia absoluta")
+   plt.title('Numeros ganadores')
+   plt.hist(lista,bins=37,range=(0,36),color='#0504aa',histtype='bar', alpha=0.7, rwidth=0.85,linewidth=1)
+   plt.grid(True)                      #Se crea las rendijas del histograma
+   plt.xlabel("Numeros")               #Nombro al eje X
+   plt.ylabel("Cantidad de veces")            #Nombro al eje Y
+   plt.show()
+   plt.clf()
+
+def creoGraficoDesvioEstandar(lista,cantTiradas):
+    plt.title('Desvio Estandar Matematico')
+    plt.plot(lista)
+    plt.xlabel("Tiradas")
+    plt.ylabel("Valor")
+    plt.ylim(0,37)
+    plt.xlim(0,cantTiradas)
+    plt.axhline(10.631,color='k', ls="dotted", xmax=cantTiradas)        #ls es el tipo de linea
+    plt.show()
+
+def creoGraficoVarianzaEsperanza(lista):
+    plt.title('Varianza Matematica de la Esperanza Matematica')
+    plt.plot(lista)
+    plt.xlabel("Tiradas")
+    plt.ylabel("Valor")
+    plt.ylim(0,36)
+    plt.xlim(0, cantTiradas)
+    plt.axhline(color='k', ls="dotted", xmax=cantTiradas)  # ls es el tipo de linea
+    plt.show()
+
+listaGanadores=[]                       #Lista donde se van a meter el resultado de las tiradas
+listaFrecuencia=[]                      #Lista de frecuencias de un numero x
+listaEsperanzas=[]                      #Lista con las esperanzas
+listaDesviosEstandar=[]                 #Lista de los desvios estandar
+listaVarianzaDeEsperanza=[]             #Lista de Varianzas de las Esperanzas
+listaEsperanzaDeEsperanza=[]            #Lista de Esperanzas de Esperanzas
+cantTiradas=1000
+cantNum=37
+ruleta = [0] * cantNum
+crearRuleta(ruleta,cantNum)             #Se crea la ruleta con los numeros ingresados
+
+for i in range(cantTiradas):
+    numGanador=girarRuleta(ruleta)        #Se devuelve el numero ganador y la cantidad de veces que se giro la ruleta
+    listaGanadores.append(numGanador)       #Aca se va meteiendo el resultado de la tirada
+    listaFrecuencia.append(calculoFrecuanciaRel(listaGanadores, i))
+    listaEsperanzas.append(calculoEsperanza(listaGanadores))
+    listaDesviosEstandar.append(calculoDesvioEstandar(listaGanadores))
+    listaVarianzaDeEsperanza.append(calculoVarianza(listaEsperanzas))
+    listaEsperanzaDeEsperanza.append(calculoEsperanza(listaEsperanzas))
+
+
+creoGraficoEsperanza(listaEsperanzas,cantTiradas)
+creoGraficosFrecRelativa(listaFrecuencia,cantTiradas)
+creoGraficoDesvioEstandar(listaDesviosEstandar,cantTiradas)
+creoGraficoVarianzaEsperanza(listaVarianzaDeEsperanza)
+creoGraficoEsperanza(listaEsperanzaDeEsperanza,cantTiradas)
+creoGraficoHistograma(listaGanadores)
+#calculoFrecuenciaRelativaDeCadaElemento(listaGanadores,ruleta,cantTiradas)
+
+\end{minted}
+
+\newpage
+\clearpage
+\newpage
+\subsection{Anexo 2: Codigo Fuente Distribución Uniforme}
+\begin{minted}[
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+]{python}
+from  random import *
+import matplotlib.pyplot as plt
+import stats
+import numpy
+import math
+
+def calculaEsperanzaTeorica(a,b):
+    e=(a+b)/2
+    return e
+
+def calculaVarianzaTeorica(a,b):
+    v=((b-a)**2)/12
+    return v
+
+def creoGraficos(valores,limInfe,limSup):
+    plt.hist(valores,edgecolor = 'black',linewidth=1,density=1)
+    y=[1/(limSup-limInfe)for x in valores]
+    plt.plot(valores,y)
+    #plt.xlabel(f'Media:{stats.mean(valores)} , Varianza:{numpy.var(valores)}')
+    plt.grid(True)
+    plt.show()
+
+def muestroEspeVarianzaDesvio(valores,a,b):
+    esperanza = stats.mean(valores)
+    esperanzaTeorica = calculaEsperanzaTeorica(a, b)
+    print("\nEl calculo de la esperanza en la muestra es:", esperanza, "\nTeoricamente la esperanza es:",esperanzaTeorica)
+    varianza = numpy.var(valores)
+    varianzaTeorica = calculaVarianzaTeorica(a, b)
+    print("\nEl calculo de la varianza en la muestra es:", varianza, "\nTeoricamente la varianza es:",varianzaTeorica)
+    desvioEstandar = math.sqrt(varianza)
+    desvioEstandarTeorico = math.sqrt(varianzaTeorica)
+    print("\nEl calculo del desvio estandar en la muestra es:", desvioEstandar, "\nTeoricamente el desvio estandar es:",desvioEstandarTeorico)
+
+
+valores=[]
+limInfe= 0
+limSup= 10000
+for i in range (limInfe,limSup):
+     valores.append(limInfe + (limSup - limInfe)*(random()))
+
+muestroEspeVarianzaDesvio(valores,limInfe,limSup)
+creoGraficos(valores,limInfe,limSup)
+\end{minted}
+
+\newpage
+\clearpage
+\newpage
+\subsection{Anexo 3: Codigo Fuente Distribución Exponencial}
+\begin{minted}[
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+]{python}
+from random import random
+import matplotlib.pyplot as plt
+import stats
+import numpy
+import math
+
+def calcularEsperanza(alfa):
+    esperanza=1/alfa
+    return esperanza
+
+def calcularVarianza(alfa):
+    var= 1/(alfa**2)
+    return var
+
+def muestroEspeYVar(valores,esperanzaTeorica,alfa):
+    print("\nEl calculo de la esperanza en la muestra  es:", stats.mean(valores))
+    print("Teoricamente la esperanza es:", esperanzaTeorica)
+    print("El calculo de la varianza en la muestra es:", numpy.var(valores))
+    print("Teoricamente la varianza es:", calcularVarianza(alfa))
+    print('alfa es: ',alfa)
+
+def creoGraficos(valores,alfa):
+    y = [alfa*math.exp(-alfa*x) for x in valores]
+    plt.plot(valores, y,'o')
+    plt.hist(valores,edgecolor = 'black',linewidth=1,density=1 , label=(f'Alfa 1 ={alfa}'))
+    plt.xlabel("Valores")
+    plt.grid(True)
+    plt.title("Grafica de Distribucion exponencial")
+    plt.show()
+
+
+cantNum = 1000
+alfas=[2,3,5]
+for i in range(0,len(alfas)):
+    valores = []
+    esperanzaTeorica=calcularEsperanza(alfas[i])
+    for j in range(0,cantNum):
+         valores.append((-esperanzaTeorica) * (math.log(random())))
+
+    muestroEspeYVar(valores,esperanzaTeorica,alfas[i])
+    creoGraficos(valores,alfas[i])
+
+\end{minted}
+
+\newpage
+\clearpage
+\newpage
+\subsection{Anexo 4: Codigo Fuente Distribución Gamma}
+\begin{minted}[
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+]{python}
+from random import random
+import matplotlib.pyplot as plt
+import stats
+import numpy
+import math
+
+def generoDistGamma(ka,alfa):
+    tr = 1
+    for i in range(0, ka):
+        tr =tr * random()
+    return (-(math.log(tr)) / alfa)
+
+def creoHistogramas(valores,alfa,ka):
+    plt.hist(valores,bins=100,edgecolor = 'black',linewidth=1,density=1, label=(f'Alfa = {alfa} , k1 = {ka}'))
+    plt.xlabel("Valores")
+    y=[((alfa**ka)*(x**(ka-1))*math.exp(-alfa*x))/math.factorial(ka-1) for x in valores]
+    plt.grid(True)
+    plt.title("Distribucion Gamma")
+    plt.legend(title="Parametros")
+    plt.plot(valores,y,'o')
+    plt.title("Grafica de Distribucion gamma")
+    #plt.xlabel(f'Media:{stats.mean(valores)} , Varianza:{numpy.var(valores)}')
+    plt.xlabel('Valores')
+    plt.show()
+
+def muestroEsperanzayVar(valores,alfa,ka):
+    print("El calculo de la esperanza en la muestra es:",stats.mean(valores))
+    print("Teoricamente la Esperanza es = ",ka/alfa)
+    print("\nEl calculo de la Varianza es = ",numpy.var(valores))
+    print("Teoricamente la Varianza es = ",ka/(alfa**2))
+    print('alfa')
+
+cantNum = 10000
+alfas=[1,4,9]
+kas=[2,5,8]
+for i in range(0,len(alfas)):
+    valores = []
+    for j in range(0,cantNum):
+        valores.append(generoDistGamma(kas[i],alfas[i]))
+    muestroEsperanzayVar(valores,alfas[i],kas[i])
+    creoHistogramas(valores,alfas[i],kas[i])
+    print('Alfa: ',alfas[i],'Ka: ',kas[i])
+    print("\n")
+
+\end{minted}
+
+\newpage
+\clearpage
+\newpage
+\subsection{Anexo 5: Codigo Fuente Distribución Normal}
+\begin{minted}[
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+]{python}
+
+from  random import *
+import matplotlib.pyplot as plt
+import stats
+import numpy
+import math
+import os
+
+
+def generoValoresNormales(mu,sigma):
+    sum=0
+    for i in range(0,12):
+        r=random()
+        sum=sum+r
+    return(sigma*(sum-6)+mu)
+
+def muestroEspeYVar(valores,mu,sigma):
+    print("\nEl calculo de la Esperanza de los valores generados es:", stats.mean(valores))
+    print("Teoricamente es =", mu)
+    print("El calculo de la Varianza de los valores generados es =",numpy.var(valores) )
+    print("Teoricamente es:",  sigma**2)
+    print("El Desvio Estandar de los valores generados es = ",math.sqrt(numpy.var(valores)))
+    print("Teoricamente es =",sigma)
+
+def creoHistogramas(valores,mu,sigma):
+    plt.hist(valores1,edgecolor = 'black',linewidth=1,density=1, label=(f'Mu = {mu} , Sigma= {sigma}'))
+    plt.xlabel("Valores")
+    plt.ylim(0,0.2)
+    y=[(1/(sigma*(math.sqrt(2*math.pi))))*math.exp((-1/2)*((x-mu)/sigma)**2) for x in valores]
+    plt.plot(valores,y,'.')
+    plt.legend(title="Funcion densidad")
+    plt.grid(True)
+    plt.title("Grafica de Distribución Normal")
+    plt.show()
+cantNum = 1000
+mu=[20,25,30]
+sigma=[2,3,5]
+print(math.pi)
+for i in range(0,len(mu)):
+    valores1 = []
+    for j in range(0,cantNum):
+        valores1.append(generoValoresNormales(mu[i],sigma[i]))
+
+    print("\nMuestra numero ", i+1)
+    muestroEspeYVar(valores1,mu[i],sigma[i])
+    creoHistogramas(valores1,mu[i],sigma[i])
+    print('mu es: ',mu[i],'sigma es: ',sigma[i])
+
+
+\end{minted}
+
+\newpage
+\clearpage
+\newpage
+\subsection{Anexo 6: Codigo Fuente Distribución Binominal}
+\begin{minted}[
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+]{python}
+from  random import *
+import matplotlib.pyplot as plt
+import stats
+import numpy
+import math
+
+def generoValoresBinomial(probSuceso,numeroEnsayos):
+    x=0
+    for i in range(0,numeroEnsayos):
+        if ( random() -probSuceso )<0:
+            x=x+1
+    return(x)
+
+def cantCombinaciones(m, n):
+    return ( math.factorial(m) // (math.factorial(n) * math.factorial(m - n)) )
+
+def muestroEspeYVar(valores,probSuceso,numeroEnsayos):
+    print("\nEl calculo de la Esperanza de los valores generados es:", stats.mean(valores))
+    print("Teoricamente es =",numeroEnsayos*probSuceso)
+    print("El calculo de la Varianza de los valores generados es =",numpy.var(valores) )
+    print("Teoricamente es:", numeroEnsayos*probSuceso*(1-probSuceso))
+    print("El Desvio Estandar de los valores generados es = ",math.sqrt(numpy.var(valores)))
+    print("Teoricamente es =",math.sqrt(numeroEnsayos*probSuceso*(1-probSuceso)))
+
+def creoHistogramas(valores,probSuceso,numeroEnsayos):
+    plt.hist(valores, color='b',edgecolor = 'black',linewidth=1,density=1, label=(f'Probabilidad suceso = {probSuceso} , Num. de ensayos = {numeroEnsayos}'))
+    plt.xlabel("Valores")
+    plt.ylim(0,0.05)
+    y=[(cantCombinaciones(numeroEnsayos,x))*( probSuceso**x ) * ( (1-probSuceso)**(numeroEnsayos-x) ) for x in valores]
+    plt.legend(title='Parametros')
+    plt.plot(valores,y, '.')
+    plt.grid(True)
+    plt.title("Grafica de Distribucion binomial")
+    plt.show()
+
+
+cantNum = 1000
+probSuceso=[0.8,0.6,0.2]
+numeroEnsayos=[800,900,1000]
+for i in range(0,3):
+    valores1 = []
+    for j in range(0,cantNum):
+        valores1.append(generoValoresBinomial(probSuceso[i],numeroEnsayos[i]))
+    print('-------------------------------------------------------')
+    print('')
+    print('la probabilidad de suceso es: ',probSuceso[i],'  el nro. de enasayos es: ' , numeroEnsayos[i])
+    muestroEspeYVar(valores1,probSuceso[i],numeroEnsayos[i])
+    creoHistogramas(valores1,probSuceso[i],numeroEnsayos[i])
+
+\end{minted}
+
+
+\newpage
+\clearpage
+\newpage
+\subsection{Anexo 7: Codigo Fuente Distribución de Poisson}
+\begin{minted}[
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+]{python}
+from  random import *
+import matplotlib.pyplot as plt
+import stats
+import numpy
+import math
+
+def generoValoresPoisson(lambdaa):
+    x=0
+    tr=1
+    b=math.exp(-lambdaa)
+    while(tr-b)>0:
+        tr= tr*random()
+        if(tr-b)>0:
+          x=x+1
+    return(x)
+
+def muestroEspeYVar(valores,lambdaa,i):
+    print("\n Muestra Nro ",i+1)
+    print("\nEl calculo de la Esperanza de los valores generados es:", stats.mean(valores))
+    print("Teoricamente es =", lambdaa)
+    print("El calculo de la Varianza de los valores generados es =", numpy.var(valores))
+    print("Teoricamente es:", lambdaa)
+    print("El Desvio Estandar de los valores generados es = ",math.sqrt(numpy.var(valores)))
+    print("Teoricamente es =",math.sqrt(lambdaa))
+
+def creoHistogramas(valores,lambdaa):
+    plt.hist(valores, color='b',edgecolor='black',linewidth=1,density=1, label=(f'Lambda={lambdaa}'))
+    y=[(( math.exp(-lambdaa)* (lambdaa**x ) )/(math.factorial(x))) for x in valores]
+    plt.plot(valores,y,'.')
+    plt.ylim(0,0.25)
+    plt.legend(title='Parametros ')
+    plt.grid(True)
+    plt.xlabel(f'Valores')
+    plt.title("Grafica Distribucion poisson")
+    plt.show()
+
+cantNum = 1000
+lambdas=[10,7,4]
+for i in range(0,3):
+    valores = []
+    for j in range(0,cantNum):
+        valores.append(generoValoresPoisson(lambdas[i]))
+    muestroEspeYVar(valores,lambdas[i],i)
+    creoHistogramas(valores,lambdas[i])
+
+\end{minted}
+
+\newpage
+\clearpage
+\newpage
+\subsection{Anexo 8: Codigo Fuente Distribución Empirica}
+\begin{minted}[
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+]{python}
+import random
+import matplotlib.pyplot as plt
+import stats
+import numpy
+import math
+
+def generoValoresEmpiricos(matrizValores):
+    x=random.random()
+    for i in range(0,len(matrizValores)):
+        if (matrizValores[i][3]>=x):
+            x=matrizValores[i][0]
+    return x
+
+cantNum=1000
+matrizValores=[[1,15,0.15,0.07],[2,15,0.15,0.3],[3,17,0.17,0.52],[4,12,0.12,0.64],[5,20,0.2,0.84],[6,16,0.16,1]]
+
+
+valores=[]
+for i in range(0,cantNum):
+    valores.append(generoValoresEmpiricos(matrizValores))
+
+print(valores)
+print("La Esperanza de la muestra es =", stats.mean(valores))
+print("La Varianza es = ", stats.variance(valores))
+plt.hist(valores, edgecolor='black', linewidth=1, alpha=0.5 )
+plt.title('Grafica Distribucion empirica')
+plt.xlabel('Valores')
+plt.show()
+\end{minted}
+\input{appendix.tex}
+
+\end{document}
